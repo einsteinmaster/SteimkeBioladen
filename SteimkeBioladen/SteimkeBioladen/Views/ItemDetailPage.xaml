@@ -16,6 +16,10 @@
         <Label Text="{Binding Item.Text}" d:Text="Item name" FontSize="Small"/>
         <Label Text="Beschreibung:" FontSize="Medium" />
         <Label Text="{Binding Item.Description}" d:Text="Item description" FontSize="Small"/>
+        <Label Text="Einzelpreis:" FontSize="Medium" />
+        <Label Text="{Binding Item.Price}" d:Text="0,00€" FontSize="Small"/>
+        <Label Text="Steuerklasse:" FontSize="Medium" />
+        <Label Text="{Binding Item.Tax}" d:Text="7%" FontSize="Small"/>
         <Label Text="Menge:" FontSize="Medium" />
         <Entry Text="{Binding Item.Amount}" FontSize="Small" />
         <Stepper Minimum="1" ValueChanged="Stepper_ValueChanged"/>

@@ -49,6 +49,7 @@ namespace SteimkeBioladen.Views
                 {
                     Debug.WriteLine("Item found");
                     MessagingCenter.Send(this, "AddItem", viewModel.ScannedItem);
+                    await Navigation.PopModalAsync();
                     return;
                 }
                 else
@@ -65,7 +66,7 @@ namespace SteimkeBioladen.Views
             {
                 await DisplayAlert("Item not found", "Item not found", "ok");
             });
-            Cancel_Clicked(this, null);
+            await Navigation.PopModalAsync();
         }
     }
 }

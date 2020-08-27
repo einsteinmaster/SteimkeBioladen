@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.IO;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace SteimkeBioladen.ViewModels
@@ -10,7 +11,7 @@ namespace SteimkeBioladen.ViewModels
     {
         public Item ScannedItem { get; private set; }
         public NewItemViewModel() { }
-        private Item GetItemFromRow(string row)
+        private Item GetItemFromRow(string row,TaxClass tax)
         {
             if (row == null) return null;
             var rowList = row.Split(';');
@@ -22,11 +23,12 @@ namespace SteimkeBioladen.ViewModels
             if (rowList.Length > 3)
                 name = rowList[3];
             if (rowList.Length > 11)
-                price = rowList[11];
+                price = rowList[10];
             Item it = new Item();
             it.Id = barcode;
             it.Price = price;
             it.Text = name;
+            it.Tax = tax;
             return it;
         }
         public async Task<Item> TryFindItemAsync(string barcode)
@@ -37,7 +39,7 @@ namespace SteimkeBioladen.ViewModels
                 var row = GetRowFromCsv(content, barcode);
                 if (row != null)
                 {
-                    return GetItemFromRow(row);
+                    return GetItemFromRow(row,TaxClass.p7);
                 }
             }
             content = await Get19pFile();
@@ -49,7 +51,7 @@ namespace SteimkeBioladen.ViewModels
                     var rowList = row.Split(';');
                     if (rowList[1] == barcode)
                     {
-                        return GetItemFromRow(row);
+                        return GetItemFromRow(row,TaxClass.p19);
                     }
                 }
             }
@@ -72,7 +74,8 @@ namespace SteimkeBioladen.ViewModels
                 var response = await client.GetAsync(uri);
                 if (response.IsSuccessStatusCode)
                 {
-                    return await response.Content.ReadAsStringAsync();
+                    byte[] barr = await response.Content.ReadAsByteArrayAsync();
+                    return Encoding.UTF8.GetString(barr);
                 }
                 else
                 {
@@ -91,7 +94,7 @@ namespace SteimkeBioladen.ViewModels
                 var rowList = it.Split(';');
                 if (rowList.Length > 1 && rowList[1] == barcode)
                 {
-                    var item = GetItemFromRow(it);
+                    var item = GetItemFromRow(it,TaxClass.none);
                     Debug.WriteLine("Entry found in DB: " + item.Text + "   price: " + item.Price);
                     return it;
                 }

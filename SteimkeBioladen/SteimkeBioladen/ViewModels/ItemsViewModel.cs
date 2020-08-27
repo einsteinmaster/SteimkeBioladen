@@ -15,7 +15,48 @@ namespace SteimkeBioladen.ViewModels
     {
         public ObservableCollection<Item> Items { get; set; }
         public Command LoadItemsCommand { get; set; }
-
+        public double TotalPrice
+        {
+            get
+            {
+                double sum = 0.0;
+                foreach (var it in Items)
+                {
+                    sum += it.GetTotalPrice();
+                }
+                return sum;
+            }
+        }
+        public double Tax7p
+        {
+            get
+            {
+                double sum = 0.0;
+                foreach (var it in Items)
+                {
+                    if (it.Tax == TaxClass.p7)
+                    {
+                        sum += it.GetTotalPrice() * 0.07;
+                    }
+                }
+                return sum;
+            }
+        }
+        public double Tax19p
+        {
+            get
+            {
+                double sum = 0.0;
+                foreach (var it in Items)
+                {
+                    if (it.Tax == TaxClass.p19)
+                    {
+                        sum += it.GetTotalPrice() * 0.19;
+                    }
+                }
+                return sum;
+            }
+        }
         public ItemsViewModel()
         {
             Title = "Browse";
@@ -76,7 +117,9 @@ namespace SteimkeBioladen.ViewModels
             string timestamp = DateTime.Now.ToString();
             // create body
             string body = "Hallo Corrie,\nHier mein einkauf vom " + timestamp + "\n";
-            body += await GetItemListAsString();
+            body += await GetItemListAsString() + "\n";
+            body += "Gesamtpreis: " + TotalPrice + "\n";
+            body += "Steuern 7%: " + Tax7p + "\t 19%: " + Tax19p + "\n";
             body += "\n\n";
             return body;
         }
