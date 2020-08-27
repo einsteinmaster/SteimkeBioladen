@@ -56,6 +56,26 @@ namespace SteimkeBioladen.Views
             BarcodeScanView.IsScanning = false;
         }
 
+        private static Item GetItemFromRow(string row)
+        {
+            if (row == null) return null;
+            var rowList = row.Split(';');
+            var barcode = "?";
+            var name = "?";
+            var price = "?";
+            if (rowList.Length > 1)
+                barcode = rowList[1];
+            if (rowList.Length > 3)
+                name = rowList[3];
+            if (rowList.Length > 11)
+                price = rowList[11];
+            Item it = new Item();
+            it.Id = barcode;
+            it.Price = price;
+            it.Text = name;
+            return it;
+        }
+
         public static async Task<Item> TryFindItemAsync(string barcode)
         {
             var content = await Get7pFile();
@@ -64,17 +84,7 @@ namespace SteimkeBioladen.Views
                 var row = GetRowFromCsv(content, barcode);
                 if (row != null)
                 {
-                    var rowList = row.Split(';');
-                    if (rowList[1] == barcode)
-                    {
-                        var name = rowList[3];
-                        var price = rowList[11];
-                        Item it = new Item();
-                        it.Id = barcode;
-                        it.Price = price;
-                        it.Text = name;
-                        return it;
-                    }
+                    return GetItemFromRow(row);
                 }
             }
             content = await Get19pFile();
@@ -86,13 +96,7 @@ namespace SteimkeBioladen.Views
                     var rowList = row.Split(';');
                     if (rowList[1] == barcode)
                     {
-                        var name = rowList[3];
-                        var price = rowList[11];
-                        Item it = new Item();
-                        it.Id = barcode;
-                        it.Price = price;
-                        it.Text = name;
-                        return it;
+                        return GetItemFromRow(row);
                     }
                 }
             }
@@ -136,11 +140,10 @@ namespace SteimkeBioladen.Views
             foreach (var it in stringlist)
             {
                 var rowList = it.Split(';');
-                if (rowList[1] == barcode)
+                if (rowList.Length > 1 && rowList[1] == barcode)
                 {
-                    var name = rowList[3];
-                    var price = rowList[11];
-                    Debug.WriteLine("Entry found in DB: " + name + "   price: " + price);
+                    var item = GetItemFromRow(it);
+                    Debug.WriteLine("Entry found in DB: " + item.Text + "   price: " + item.Price);
                     return it;
                 }
             }
@@ -155,6 +158,16 @@ namespace SteimkeBioladen.Views
             try
             {
                 Item = await TryFindItemAsync(result.Text);
+                if (Item != null)
+                {
+                    Debug.WriteLine("Item found");
+                    Save_Clicked(this, null);
+                    return;
+                }
+                else
+                {
+                    Debug.WriteLine("Item not found");
+                }
             }
             catch (Exception exc)
             {
@@ -162,9 +175,10 @@ namespace SteimkeBioladen.Views
                 Debug.WriteLine(exc.ToString());
             }
 
-            //MainThread.BeginInvokeOnMainThread(async () =>
-            //{
-            //});
+            MainThread.BeginInvokeOnMainThread(async () =>
+            {
+                await DisplayAlert("Item not found", "Item not found", "ok");
+            });
 
             Cancel_Clicked(this, null);
         }
