@@ -18,7 +18,13 @@ namespace SteimkeBioladen.Models
         public string Price { get; set; }
         public override string ToString()
         {
-            return "EAN:" + Id + "\t" + "Menge:" + Amount + "\t" + "Name:" + Text + "\t" + Description;
+            double ep,am;
+            string retstr = "EAN:" + Id + "\tEinzelpreis:" + Price + "€\tMenge:" + Amount + "\tName:" + Text + "\t" + Description;
+            if (Double.TryParse(Price,out ep) && Double.TryParse(Amount,out am))
+            {
+                retstr += "\tGesamtpreis:" + (ep*am).ToString()+"€";
+            }
+            return retstr;
         }
     }
 }

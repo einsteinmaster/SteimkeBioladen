@@ -11,11 +11,10 @@ using SteimkeBioladen.Models;
 using SteimkeBioladen.Views;
 using SteimkeBioladen.ViewModels;
 using Xamarin.Essentials;
+using System.Diagnostics;
 
 namespace SteimkeBioladen.Views
 {
-    // Learn more about making custom code visible in the Xamarin.Forms previewer
-    // by visiting https://aka.ms/xamarinforms-previewer
     [DesignTimeVisible(false)]
     public partial class ItemsPage : ContentPage
     {
@@ -52,25 +51,19 @@ namespace SteimkeBioladen.Views
         {
             try
             {
-                string timestamp = DateTime.Now.ToString();
-                // create body
-                string body = "Hallo Corrie,\nHier mein einkauf vom "+timestamp+"\n";
-                body += await viewModel.GetItemListAsString();
-                body += "\n\n";
-
-                // create mail
-                List<string> recipients = new List<string>();
-                recipients.Add("lagerplatz@gut-steimke.de");
-                var message = new EmailMessage
+                var email = new EmailMessage
                 {
-                    Subject = "Einkauf vom " + timestamp ,
-                    To = recipients,
-                    Body = body,
+                    Subject = await viewModel.GetEmailSubject(),
+                    To = await viewModel.GetEmailRecipients(),
+                    Body = await viewModel.CreateBuyItemsEmail(),
                 };
-                await Email.ComposeAsync(message);
-            }catch(Exception exc)
+                await Email.ComposeAsync(email);
+            }
+            catch(Exception exc)
             {
-
+                Debug.WriteLine("Exception while buy items");
+                Debug.WriteLine(exc.ToString());
+                await DisplayAlert("Error while buy items", exc.ToString(), "ok");
             }
         }
     }

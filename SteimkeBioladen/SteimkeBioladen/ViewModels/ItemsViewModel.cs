@@ -7,6 +7,7 @@ using Xamarin.Forms;
 
 using SteimkeBioladen.Models;
 using SteimkeBioladen.Views;
+using System.Collections.Generic;
 
 namespace SteimkeBioladen.ViewModels
 {
@@ -68,6 +69,30 @@ namespace SteimkeBioladen.ViewModels
             {
                 IsBusy = false;
             }
+        }
+
+        public async Task<string> CreateBuyItemsEmail()
+        {
+            string timestamp = DateTime.Now.ToString();
+            // create body
+            string body = "Hallo Corrie,\nHier mein einkauf vom " + timestamp + "\n";
+            body += await GetItemListAsString();
+            body += "\n\n";
+            return body;
+        }
+
+        public Task<List<string>> GetEmailRecipients()
+        {
+            // create mail
+            List<string> recipients = new List<string>();
+            recipients.Add("lagerplatz@gut-steimke.de");
+            return Task.FromResult(recipients);
+        }
+
+        public Task<string> GetEmailSubject()
+        {
+            string timestamp = DateTime.Now.ToString();
+            return Task.FromResult("Einkauf vom " + timestamp);
         }
     }
 }

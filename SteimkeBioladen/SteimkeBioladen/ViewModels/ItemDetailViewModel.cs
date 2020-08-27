@@ -1,5 +1,8 @@
 ﻿using System;
-
+using System.Diagnostics;
+using System.IO;
+using System.Net.Http;
+using System.Threading.Tasks;
 using SteimkeBioladen.Models;
 
 namespace SteimkeBioladen.ViewModels
@@ -18,5 +21,6 @@ namespace SteimkeBioladen.ViewModels
             Item.Amount = v;
             OnPropertyChanged("Item");
         }
+
     }
 }
