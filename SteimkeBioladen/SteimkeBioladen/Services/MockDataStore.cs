@@ -6,7 +6,7 @@ using SteimkeBioladen.Models;
 
 namespace SteimkeBioladen.Services
 {
-    public class MockDataStore : IDataStore<Item>
+    public class MockDataStore : IDataStore
     {
         readonly List<Item> items;
 
@@ -50,6 +50,26 @@ namespace SteimkeBioladen.Services
         public async Task<IEnumerable<Item>> GetItemsAsync(bool forceRefresh = false)
         {
             return await Task.FromResult(items);
+        }
+
+        public Task<string> GetFile(string path)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task Update()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> Exists(string path)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task SaveFile(string path, string content)
+        {
+            throw new NotImplementedException();
         }
     }
 }

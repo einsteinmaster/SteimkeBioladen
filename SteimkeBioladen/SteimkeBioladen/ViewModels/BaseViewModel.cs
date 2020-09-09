@@ -12,7 +12,7 @@ namespace SteimkeBioladen.ViewModels
 {
     public class BaseViewModel : INotifyPropertyChanged
     {
-        public IDataStore<Item> DataStore => DependencyService.Get<IDataStore<Item>>();
+        public IDataStore DataStore => DependencyService.Get<IDataStore>();
 
         bool isBusy = false;
         public bool IsBusy

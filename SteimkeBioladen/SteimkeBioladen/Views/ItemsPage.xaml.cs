@@ -43,7 +43,7 @@ namespace SteimkeBioladen.Views
         {
             base.OnAppearing();
 
-            if (viewModel.Items.Count == 0)
+            if (viewModel.Items != null && viewModel.Items.Count == 0)
                 viewModel.IsBusy = true;
         }
 

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SteimkeBioladen.ViewModels
 {
-    class NewItemViewModel
+    class NewItemViewModel : BaseViewModel
     {
         public Item ScannedItem { get; private set; }
         public NewItemViewModel() { }
@@ -59,31 +59,17 @@ namespace SteimkeBioladen.ViewModels
         }
         public Task<string> Get7pFile()
         {
-            string requri_7p = "http://rkp.intecelektro.de/steimkebioladen/Elkershausen%20Preisliste%20Excel%207%25%202.18.csv";
+            string requri_7p = "Elkershausen Preisliste Excel 7% 2.18.csv";
             return GetHttpFile(requri_7p);
         }
         public Task<string> Get19pFile()
         {
-            string requri_19p = "http://rkp.intecelektro.de/steimkebioladen/Elkershausen%20Preisliste%20Excel%2019%25%202.18.csv";
+            string requri_19p = "Elkershausen Preisliste Excel 19% 2.18.csv";
             return GetHttpFile(requri_19p);
         }
-        public async Task<string> GetHttpFile(string uri)
+        public Task<string> GetHttpFile(string uri)
         {
-            using (HttpClient client = new HttpClient())
-            {
-                var response = await client.GetAsync(uri);
-                if (response.IsSuccessStatusCode)
-                {
-                    byte[] barr = await response.Content.ReadAsByteArrayAsync();
-                    return Encoding.UTF8.GetString(barr);
-                }
-                else
-                {
-                    Debug.WriteLine("No Successcode response");
-                    Debug.WriteLine(response.ToString());
-                    throw new FileNotFoundException(uri);
-                }
-            }
+            return DataStore.GetFile(uri);
         }
         public string GetRowFromCsv(string file, string barcode)
         {

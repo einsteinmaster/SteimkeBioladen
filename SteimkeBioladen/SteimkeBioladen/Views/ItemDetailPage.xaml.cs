@@ -38,13 +38,27 @@ namespace SteimkeBioladen.Views
 
         private async void DeleteItem_Clicked(object sender, EventArgs e)
         {
-            MessagingCenter.Send(this, "DeleteItem", viewModel.Item);
-            await Navigation.PopModalAsync();
+            try
+            {
+                MessagingCenter.Send(this, "DeleteItem", viewModel.Item);
+                await Navigation.PopAsync();
+            }
+            catch(Exception exc)
+            {
+                await DisplayAlert("Exception at delete",exc.ToString(),"ok");
+            }
         }
 
-        private void Stepper_ValueChanged(object sender, ValueChangedEventArgs e)
+        private async void Stepper_ValueChanged(object sender, ValueChangedEventArgs e)
         {
-            viewModel.SetAmount(((int)e.NewValue).ToString());
+            try
+            {
+                viewModel.SetAmount(((int)e.NewValue).ToString());
+            }
+            catch (Exception exc)
+            {
+                await DisplayAlert("Exception at Stepper Value change", exc.ToString(), "ok");
+            }
         }
     }
 }

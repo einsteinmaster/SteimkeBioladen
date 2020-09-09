@@ -54,18 +54,30 @@ namespace SteimkeBioladen.Views
                 }
                 else
                 {
-                    Debug.WriteLine("Item not found");
+                    MainThread.BeginInvokeOnMainThread(async () =>
+                    {
+                        await DisplayAlert("Item not found", "Item not found", "ok");
+                    });
                 }
+            }
+            catch(FileNotFoundException)
+            {
+                Debug.WriteLine("Filenotfound Exception");
+                MainThread.BeginInvokeOnMainThread(async () =>
+                {
+                    await DisplayAlert("FileNotFound Exception", "File is not at server", "ok");
+                });
             }
             catch (Exception exc)
             {
                 Debug.WriteLine("Exception while read DB");
                 Debug.WriteLine(exc.ToString());
+                MainThread.BeginInvokeOnMainThread(async () =>
+                {
+                    await DisplayAlert("Exception at Barcode proc", exc.ToString(), "ok");
+                });
             }
-            MainThread.BeginInvokeOnMainThread(async () =>
-            {
-                await DisplayAlert("Item not found", "Item not found", "ok");
-            });
+            
             await Navigation.PopModalAsync();
         }
     }

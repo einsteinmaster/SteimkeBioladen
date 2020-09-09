@@ -65,16 +65,30 @@ namespace SteimkeBioladen.ViewModels
 
             MessagingCenter.Subscribe<NewItemPage, Item>(this, "AddItem", async (obj, item) =>
             {
-                var newItem = item as Item;
-                Items.Add(newItem);
-                await DataStore.AddItemAsync(newItem);
+                try
+                {
+                    var newItem = item as Item;
+                    Items.Add(newItem);
+                    await DataStore.AddItemAsync(newItem);
+                }
+                catch (Exception exc)
+                {
+                    Debug.WriteLine(exc);
+                }
             });
 
             MessagingCenter.Subscribe<ItemDetailPage, Item>(this, "DeleteItem", async (obj, item) =>
             {
-                var newItem = item as Item;
-                Items.Remove(newItem);
-                await DataStore.DeleteItemAsync(newItem.Id);
+                try
+                {
+                    var newItem = item as Item;
+                    Items.Remove(newItem);
+                    await DataStore.DeleteItemAsync(newItem.Id);
+                }
+                catch(Exception exc)
+                {
+                    Debug.WriteLine(exc);
+                }                
             });
         }
 

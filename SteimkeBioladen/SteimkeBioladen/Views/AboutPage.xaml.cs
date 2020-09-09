@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SteimkeBioladen.ViewModels;
+using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using Xamarin.Essentials;
@@ -12,11 +13,23 @@ namespace SteimkeBioladen.Views
     [DesignTimeVisible(false)]
     public partial class AboutPage : ContentPage
     {
+        AboutViewModel viewModel;
         public AboutPage()
         {
             InitializeComponent();
+            BindingContext = viewModel = new AboutViewModel();
         }
 
-        
+        private async void Button_Clicked(object sender, EventArgs e)
+        {
+            try
+            {
+                await viewModel.UpdateDB();
+            }
+            catch (Exception exc)
+            {
+                await DisplayAlert("Exception at update", exc.ToString(), "ok");
+            }
+        }
     }
 }

@@ -3,6 +3,7 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using SteimkeBioladen.Services;
 using SteimkeBioladen.Views;
+using Xamarin.Essentials;
 
 namespace SteimkeBioladen
 {
@@ -13,7 +14,8 @@ namespace SteimkeBioladen
         {
             InitializeComponent();
 
-            DependencyService.Register<MockDataStore>();
+            VersionTracking.Track();
+            DependencyService.Register<DataStore>();
             MainPage = new MainPage();
         }
 

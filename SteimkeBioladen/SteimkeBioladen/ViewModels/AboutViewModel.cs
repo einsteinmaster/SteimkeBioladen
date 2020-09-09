@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Essentials;
 using Xamarin.Forms;
@@ -7,12 +8,21 @@ namespace SteimkeBioladen.ViewModels
 {
     public class AboutViewModel : BaseViewModel
     {
+        public string AppVersion
+        {
+            get
+            {
+                return "Version: "+VersionTracking.CurrentVersion + " (" + VersionTracking.CurrentBuild + ")";
+            }
+        }
         public AboutViewModel()
         {
             Title = "About";
-            OpenWebCommand = new Command(async () => await Browser.OpenAsync("https://xamarin.com"));
         }
 
-        public ICommand OpenWebCommand { get; }
+        public Task UpdateDB()
+        {
+            return DataStore.Update();
+        }
     }
 }

@@ -7,7 +7,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SteimkeBioladen.Android", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SteimkeBioladen.iOS", "SteimkeBioladen\SteimkeBioladen.iOS\SteimkeBioladen.iOS.csproj", "{A2EFF27D-5377-4659-AECE-966B63771ED0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SteimkeBioladen", "SteimkeBioladen\SteimkeBioladen\SteimkeBioladen.csproj", "{DA403F7D-0823-4FA1-97DE-AEA40E93EA46}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SteimkeBioladen", "SteimkeBioladen\SteimkeBioladen\SteimkeBioladen.csproj", "{DA403F7D-0823-4FA1-97DE-AEA40E93EA46}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NUnitTestProject1", "NUnitTestProject1\NUnitTestProject1.csproj", "{853D3003-2AEC-4C7B-89B6-65D21090F771}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -73,6 +75,18 @@ Global
 		{DA403F7D-0823-4FA1-97DE-AEA40E93EA46}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
 		{DA403F7D-0823-4FA1-97DE-AEA40E93EA46}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
 		{DA403F7D-0823-4FA1-97DE-AEA40E93EA46}.Release|iPhoneSimulator.Deploy.0 = Release|Any CPU
+		{853D3003-2AEC-4C7B-89B6-65D21090F771}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{853D3003-2AEC-4C7B-89B6-65D21090F771}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{853D3003-2AEC-4C7B-89B6-65D21090F771}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{853D3003-2AEC-4C7B-89B6-65D21090F771}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{853D3003-2AEC-4C7B-89B6-65D21090F771}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{853D3003-2AEC-4C7B-89B6-65D21090F771}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{853D3003-2AEC-4C7B-89B6-65D21090F771}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{853D3003-2AEC-4C7B-89B6-65D21090F771}.Release|Any CPU.Build.0 = Release|Any CPU
+		{853D3003-2AEC-4C7B-89B6-65D21090F771}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{853D3003-2AEC-4C7B-89B6-65D21090F771}.Release|iPhone.Build.0 = Release|Any CPU
+		{853D3003-2AEC-4C7B-89B6-65D21090F771}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{853D3003-2AEC-4C7B-89B6-65D21090F771}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

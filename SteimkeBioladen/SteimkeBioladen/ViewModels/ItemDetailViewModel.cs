@@ -18,6 +18,7 @@ namespace SteimkeBioladen.ViewModels
 
         internal void SetAmount(string v)
         {
+            if (Item is null) return;
             Item.Amount = v;
             OnPropertyChanged("Item");
         }
